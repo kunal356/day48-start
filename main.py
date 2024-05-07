@@ -10,12 +10,28 @@ driver = webdriver.Chrome(options=chrome_options)
 # price_penny = driver.find_element(by=By.CLASS_NAME, value="a-price-fraction")
 # print(f"The price of the item is {price_pounds.text}.{price_penny.text}")
 
-driver.get("https://docs.python.org/3/")
-search_bar = driver.find_element(by=By.NAME, value="q")
-print(search_bar.get_attribute("placeholder"))
-print(search_bar.tag_name)
-documentation_link = driver.find_element(by=By.XPATH, value='//*[@id="cpython-language-and-version"]/a')
-print(documentation_link.text)
-by_css_selector = driver.find_element(by=By.CSS_SELECTOR, value="table.contentstable a.biglink")
-print(by_css_selector.text)
+# driver.get("https://docs.python.org/3/")
+# search_bar = driver.find_element(by=By.NAME, value="q")
+# print(search_bar.get_attribute("placeholder"))
+# print(search_bar.tag_name)
+# documentation_link = driver.find_element(by=By.XPATH, value='//*[@id="cpython-language-and-version"]/a')
+# print(documentation_link.text)
+# by_css_selector = driver.find_element(by=By.CSS_SELECTOR, value="table.contentstable a.biglink")
+# print(by_css_selector.text)
+
+driver.get("https://www.python.org/")
+# using css selector
+events_anchor_list = driver.find_elements(by=By.CSS_SELECTOR, value='.event-widget ul.menu a')
+events_time_list = driver.find_elements(by=By.CSS_SELECTOR,
+                                        value='.event-widget time')
+# using x-path
+# events_anchor_list = driver.find_elements(by=By.XPATH, value='//*[@id="content"]/div/section/div[2]/div[2]/div/ul/li/a')
+# events_time_list = driver.find_elements(by=By.XPATH,
+#                                         value='//*[@id="content"]/div/section/div[2]/div[2]/div/ul/li/time')
+
+res = {i: {'name': events_anchor_list[i].text,
+           'time': events_time_list[i].text
+           } for i in range(len(events_time_list))}
+
+print(res)
 driver.quit()
